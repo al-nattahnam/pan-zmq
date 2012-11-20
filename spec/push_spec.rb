@@ -98,6 +98,10 @@ describe PanZMQ::Push do
       end
 =end
   end
+  
+  #after(:all) do
+  #  puts "'#{PanZMQ.terminate}'"
+  #end
 
   #context "not under EM, Reply inside Thread/EM" do
   #  after(:each) do

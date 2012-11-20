@@ -24,7 +24,6 @@ module PanZMQ
           begin
             block.call(@messages.shift)
           end while @messages.size > 0
-          #yield @messages
         end
 
         origin.transfer
@@ -62,7 +61,12 @@ module PanZMQ
       success.call
     end
 
+    def kill
+      @alive = false
+    end
+
     def close
+      kill
       @socket.close
     end
 
