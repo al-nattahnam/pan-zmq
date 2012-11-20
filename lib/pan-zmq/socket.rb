@@ -90,9 +90,9 @@ module PanZMQ
     # Returns the ZMQ socket type
     #
     # @return [Fixnum] which can be one of ZMQ::REP, ZMQ::REQ, ZMQ::PUSH, ZMQ::PULL socket types contant values
-    def socket_type
-      @socket_type
-    end
+    #def socket_type
+    #  @socket_type
+    #end
 
     #def on_read(&block)
     #  return false if not @connection or block.arity != 1

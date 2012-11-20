@@ -1,66 +1,49 @@
 require 'spec_helper'
 
 describe PanZMQ::Push do
-  context "under EM" do
 
-    describe "#new" do
-      it "should be in 'unavailable' state" do
-        @push = PanZMQ::Push.new
-        @push.state.should == :unavailable
-      end
+  describe "#new" do
+    it "should be in 'unavailable' state" do
+      @push = PanZMQ::Push.new
+      @push.state.should == :unavailable
+    end
+  end
+
+  describe "#connect" do
+    it "should return 'idle' when passing a valid address" do
+      @push = PanZMQ::Push.new
+      @push.connect("tcp://127.0.0.1:5233").should == :idle
+      @push.close
     end
 
-    describe "#connect" do
-      it "should return 'idle' when passing a valid address" do
-        @push = PanZMQ::Push.new
-        @push.connect("tcp://127.0.0.1:5233").should == :idle
-        @push.close
-      end
-
-      it "should return false when passing an invalid address" do
-        @push = PanZMQ::Push.new
-        @push.connect(1245).should == false
-        @push.close
-      end
+    it "should return false when passing an invalid address" do
+      @push = PanZMQ::Push.new
+      @push.connect(1245).should == false
+      @push.close
     end
+  end
 
-    describe "#bind" do
-      it "should be in 'idle state'" do
-        @push = PanZMQ::Push.new
-        @push.bind "tcp://127.0.0.1:5234"
-        @push.state.should == :idle
-        @push.close
-      end
+  describe "#bind" do
+    it "should be in 'idle state'" do
+      @push = PanZMQ::Push.new
+      @push.bind "tcp://127.0.0.1:5234"
+      @push.state.should == :idle
+      @push.close
     end
+  end
 
-    context 'when pushing to a listening Reply' do
-      it "should send a response" do
-        @pull = PanZMQ::Pull.new
-        @push = PanZMQ::Push.new
+  context 'when pushing to a listening Reply' do
+    it "should send a response" do
+      @pull = PanZMQ::Pull.new
+      @push = PanZMQ::Push.new
 
-        @pull.bind "tcp://127.0.0.1:5235"
-        @push.connect "tcp://127.0.0.1:5235"
+      @pull.bind "tcp://127.0.0.1:5235"
+      @push.connect "tcp://127.0.0.1:5235"
 
-        @push.send_string("request").should == :idle
-        @push.send_string("request2").should == :idle
-        @push.send_string("request3").should == :idle
+      @pull.close
+      @push.close
 
-        order = 0
-
-        @pull.receive { |msg|
-          case order
-            when 0
-              msg.should == "request"
-            when 1
-              msg.should == "request2"
-            when 2
-              msg.should == "request3"
-              @pull.close
-              @push.close
-          end
-          order += 1
-        }
-      end
+    end
 
 =begin
       it "should change its state" do
@@ -114,7 +97,6 @@ describe PanZMQ::Push do
         end
       end
 =end
-    end
   end
 
   #context "not under EM, Reply inside Thread/EM" do
