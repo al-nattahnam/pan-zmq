@@ -1,9 +1,11 @@
 require 'ffi-rzmq'
 require 'fiber'
 
-require "pan-zmq/version"
+require "pan-zmq/socket_states"
+require "pan-zmq/socket"
 require "pan-zmq/push"
 require "pan-zmq/pull"
+require "pan-zmq/version"
 
 module PanZMQ
   @@context = nil

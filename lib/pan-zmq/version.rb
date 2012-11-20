@@ -1,5 +1,3 @@
-module Pan
-  module Zmq
-    VERSION = "0.0.1"
-  end
+module PanZMQ
+  VERSION = "0.0.1"
 end
