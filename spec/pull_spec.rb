@@ -76,7 +76,7 @@ describe PanZMQ::Pull do
         @push.send_string("request3")
 
         order = 0
-        @pull.receive { |msg|
+        @pull.on_receive { |msg|
           case order
             when 0
               msg.should == "request"
@@ -89,6 +89,7 @@ describe PanZMQ::Pull do
           end
           order += 1
         }
+        @pull.recv_string
       end
     end
   end
