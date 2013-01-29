@@ -8,6 +8,8 @@ require "pan-zmq/pull"
 require "pan-zmq/push"
 require "pan-zmq/reply"
 require "pan-zmq/request"
+require "pan-zmq/broadcast"
+require "pan-zmq/subscribe"
 
 require "pan-zmq/poller"
 require "pan-zmq/version"
