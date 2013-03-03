@@ -67,7 +67,7 @@ module PanZMQ
 
     def recv_string(flags=0)
       return false if not @alive
-      flags #||= ZMQ::NOBLOCK
+      flags #||= ZMQ::DONTWAIT
       msg = ''
       @socket.recv_string(msg, flags)
       if defined?(@receive_block)

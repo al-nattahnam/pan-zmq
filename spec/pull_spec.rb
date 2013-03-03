@@ -50,7 +50,7 @@ describe PanZMQ::Pull do
         @pull.bind "tcp://127.0.0.1:5235"
         @push.connect "tcp://127.0.0.1:5235"
         
-        @pull.recv_string(ZMQ::NOBLOCK).should == ""
+        @pull.recv_string(ZMQ::DONTWAIT).should == ""
 
         @push.send_string("request")
 
